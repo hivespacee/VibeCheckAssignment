@@ -154,3 +154,23 @@ export const gettingAllFollowedVibes = async(req,res)=>{
         return res.status(500).json({error:"Server Down Down Dappa !!!!!"})
     }
 }
+
+export const deleteVibe =async(req,res)=>{
+    try{
+        const vibeId = req.params.id;
+        const userId = req.user.id;
+        const vibe = await Vibe.findById(vibeId);
+        if (!vibe){
+            return res.status(400).json({message : "Sorry no vibe found"});
+        }
+        if(vibe.user.toString() === userId){
+            await Vibe.findByIdAndDelete(vibeId);
+            res.status(200).json({message : "Vibe Deleted Successfully"});
+        }
+        return res.status(403).json({message : "Sorry you can't delete this vibe"});
+
+    }
+    catch(error){
+        return res.status(500).json({error : "Sorry to disturb while deleting vibe, server"});
+    }
+}

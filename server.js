@@ -4,6 +4,7 @@ import {config} from "dotenv";
 import authRouter from "./routes/auth.js";
 import vibeRouter from "./routes/vibes.js";
 import commentRouter from "./routes/comments.js";
+import errorHandling from "./middleware/error.js";
 
 config();
 
@@ -19,6 +20,7 @@ app.get('/',(req,res)=>{
 app.use(authRouter);
 app.use(vibeRouter);
 app.use(commentRouter);
+app.use(errorHandling);
 
 app.listen(PORT, ()=>{
     console.log(`Server successfully running at <http://localhost:${PORT}>`)
